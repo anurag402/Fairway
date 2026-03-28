@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import Charity from "../models/Charity.js";
 import User from "../models/User.js";
 import asyncHandler from "../utils/asyncHandler.js";

@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import { markExpiredSubscriptions } from "../services/stripeService.js";
