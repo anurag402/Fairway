@@ -22,10 +22,28 @@ const apiLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+const allowedOrigins = String(process.env.CORS_ORIGIN || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const corsOrigin =
+  allowedOrigins.length === 0
+    ? true
+    : (requestOrigin, callback) => {
+        // Allow same-origin/non-browser requests and explicit allowlisted origins.
+        if (!requestOrigin || allowedOrigins.includes(requestOrigin)) {
+          callback(null, true);
+          return;
+        }
+
+        callback(new Error(`CORS blocked for origin: ${requestOrigin}`));
+      };
+
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || true,
+    origin: corsOrigin,
     credentials: true,
   }),
 );
